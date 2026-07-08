@@ -395,7 +395,7 @@ function setupContactForm() {
     submitBtn.disabled = true;
 
     // TODO: Replace this URL with your actual production n8n webhook URL
-    const N8N_WEBHOOK_URL = "https://ai007.app.n8n.cloud/webhook-test/portfolio-contact";
+    const N8N_WEBHOOK_URL = "https://ai007.app.n8n.cloud/webhook/portfolio-contact";
 
     // Send the contact form data to n8n webhook
     fetch(N8N_WEBHOOK_URL, {
