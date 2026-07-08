@@ -279,7 +279,7 @@ function setupNavigation() {
 // 2. Scroll Reveal Animations using Intersection Observer
 function setupScrollReveal() {
   const revealElements = document.querySelectorAll(".reveal");
-  
+
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -311,7 +311,7 @@ function setupModals() {
   const wrapper = document.querySelector(".modal-wrapper");
   const closeBtn = document.querySelector(".modal-close-btn");
   const modalBody = document.querySelector(".modal-body");
-  
+
   // Select all trigger cards
   const projectCards = document.querySelectorAll(".project-card");
   const thoughtCards = document.querySelectorAll(".thought-card");
@@ -390,23 +390,42 @@ function setupContactForm() {
       return;
     }
 
-    // Simulate sending form message (success timeline animation)
     const submitBtn = form.querySelector(".submit-btn");
-    const originalText = submitBtn.textContent;
     submitBtn.textContent = "Sending System Query...";
     submitBtn.disabled = true;
 
-    setTimeout(() => {
-      // Hide form fields smoothly
-      form.style.transition = "opacity 0.4s ease";
-      form.style.opacity = "0.1";
-      
-      setTimeout(() => {
-        form.style.display = "none";
-        successMsg.style.display = "block";
-        
-        // Populate custom success card details
-        successMsg.innerHTML = `
+    // TODO: Replace this URL with your actual production n8n webhook URL
+    const N8N_WEBHOOK_URL = "https://ai007.app.n8n.cloud/webhook-test/portfolio-contact";
+
+    // Send the contact form data to n8n webhook
+    fetch(N8N_WEBHOOK_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        project: project
+      })
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Automation server error");
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Hide form fields smoothly
+        form.style.transition = "opacity 0.4s ease";
+        form.style.opacity = "0.1";
+
+        setTimeout(() => {
+          form.style.display = "none";
+          successMsg.style.display = "block";
+
+          // Populate custom success card details
+          successMsg.innerHTML = `
           <div style="font-size: 3rem; margin-bottom: 16px;">🚀</div>
           <h3 style="font-family: var(--font-title); font-size: 1.5rem; text-transform: uppercase; margin-bottom: 8px;">Pipeline Triggered Successfully</h3>
           <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
@@ -414,7 +433,13 @@ function setupContactForm() {
             A confirmation notification has been dispatched to <strong>${email}</strong>. I will get back to you shortly.
           </p>
         `;
-      }, 400);
-    }, 1500);
+        }, 400);
+      })
+      .catch(error => {
+        console.error("Submission failed:", error);
+        submitBtn.textContent = "Submit Request";
+        submitBtn.disabled = false;
+        alert("There was an issue sending your request to the automation server. Please verify your n8n webhook URL configuration or email me directly at kingstonblessed10@gmail.com.");
+      });
   });
 }
