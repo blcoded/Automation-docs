@@ -250,8 +250,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 1. Navigation capsule logic
 function setupNavigation() {
-  const headerLinks = document.querySelectorAll("nav ul li a, .logo");
+  const collapsedPill = document.querySelector(".nav-capsule-collapsed");
+  const dropdownMenu = document.querySelector(".nav-menu-dropdown");
+  const triggerBtn = document.querySelector(".nav-menu-trigger");
+  const closeBtn = document.querySelector(".nav-menu-close");
+  const dropdownLinks = document.querySelectorAll(".nav-dropdown-btn");
   const sections = document.querySelectorAll("section");
+
+  const openMenu = () => {
+    collapsedPill.classList.add("hidden");
+    dropdownMenu.classList.add("active");
+  };
+
+  const closeMenu = () => {
+    collapsedPill.classList.remove("hidden");
+    dropdownMenu.classList.remove("active");
+  };
+
+  // Open / Close events
+  triggerBtn.addEventListener("click", openMenu);
+  closeBtn.addEventListener("click", closeMenu);
+
+  // Close when links are clicked
+  dropdownLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      closeMenu();
+    });
+  });
+
+  // Close menu if clicked outside
+  document.addEventListener("click", (e) => {
+    if (!collapsedPill.contains(e.target) && !dropdownMenu.contains(e.target)) {
+      closeMenu();
+    }
+  });
 
   // Highlight navigation item on scroll
   window.addEventListener("scroll", () => {
@@ -266,10 +298,10 @@ function setupNavigation() {
       }
     });
 
-    headerLinks.forEach((link) => {
+    dropdownLinks.forEach((link) => {
       link.classList.remove("active");
       const href = link.getAttribute("href");
-      if (href && href.substring(2) === current) {
+      if (href && href.substring(1) === current) {
         link.classList.add("active");
       }
     });

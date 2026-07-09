@@ -18,17 +18,26 @@
 
   <!-- Floating Navigation Capsule -->
   <header class="reveal">
-    <div class="nav-capsule">
-      <a href="#hero-section" class="logo">KINGSTON</a>
-      <nav>
-        <ul>
-          <li><a href="#hero-section" class="active">Home</a></li>
-          <li><a href="#about-section">About</a></li>
-          <li><a href="#services-section">Services</a></li>
-          <li><a href="#works-section">Works</a></li>
-          <li><a href="#contact-section">Contact</a></li>
-        </ul>
-      </nav>
+    <!-- Collapsed State -->
+    <div class="nav-capsule-collapsed">
+      <a href="#hero-section" class="nav-brand">Kingston</a>
+      <button class="nav-menu-trigger" aria-label="Open menu">
+        <span class="dots">•••</span>
+      </button>
+    </div>
+
+    <!-- Expanded State (Dropdown) -->
+    <div class="nav-menu-dropdown">
+      <div class="nav-dropdown-header">
+        <span class="nav-brand">Kingston</span>
+        <button class="nav-menu-close" aria-label="Close menu">&times;</button>
+      </div>
+      <ul class="nav-dropdown-links">
+        <li><a href="#about-section" class="nav-dropdown-btn">About Me</a></li>
+        <li><a href="#services-section" class="nav-dropdown-btn">Services</a></li>
+        <li><a href="#works-section" class="nav-dropdown-btn">Projects</a></li>
+        <li><a href="#contact-section" class="nav-dropdown-btn">Contact</a></li>
+      </ul>
     </div>
   </header>
 
@@ -53,16 +62,16 @@
         </div>
         <div class="hero-metrics reveal reveal-delay-3">
           <div class="metric-item">
-            <span class="metric-value">4+</span>
-            <span class="metric-label">Years Automating Systems</span>
+            <span class="metric-value">6+ Mo</span>
+            <span class="metric-label">In Automation Space</span>
           </div>
           <div class="metric-item">
-            <span class="metric-value">50+</span>
-            <span class="metric-label">Pipelines Deployed</span>
+            <span class="metric-value">6+</span>
+            <span class="metric-label">Demo Projects Deployed</span>
           </div>
           <div class="metric-item">
-            <span class="metric-value">15h+</span>
-            <span class="metric-label">Saved per Client Weekly</span>
+            <span class="metric-value">TS Academy</span>
+            <span class="metric-label">Automation Graduate</span>
           </div>
         </div>
       </div>
